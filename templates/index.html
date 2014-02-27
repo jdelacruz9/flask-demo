@@ -1,0 +1,28 @@
+<!doctype html>
+<title> Piloto Twitter </title> 
+{% if tweets %}
+	{% for tweet in tweets %}
+		<div id='{{tweet.id}}' class='tweet'>
+			<p> {{tweet.text}} </p>
+		</div>
+	{% endfor%}
+{% else %}
+	<p>No hay tweets, corillo</p>
+{% endif%}
+
+Tweet: <input id='tweet-text' type='text' name='tweet'>
+<button id='add-tweet'>Add!</button>
+
+<script type='text/javascript' src='http://code.jquery.com/jquery-2.1.0.min.js'></script>
+<script type='text/javascript'>
+	$('#add-tweet').click(function () {
+		$.ajax({
+			url: '/tweets', 
+			type: 'POST',
+			data: {tweet: $('#tweet-text').val()},
+			success: function(res) {
+				location.reload();
+			}
+		});
+	});
+</script>
